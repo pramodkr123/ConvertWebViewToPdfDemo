@@ -19,13 +19,13 @@ Permission in Manifest
 
 Sample code :
 
-                File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM + "/PDFTest/");
+                File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM + "/PDFTest/");
                 final String fileName="Test.pdf";
 
                 final ProgressDialog progressDialog=new ProgressDialog(MainActivity.this);
                 progressDialog.setMessage("Please wait");
                 progressDialog.show();
-                PdfView.createWebPrintJob(MainActivity.this, webView, path, fileName, new PdfView.Callback() {
+                PdfView.createWebPrintJob(MainActivity.this, webView, directory, fileName, new PdfView.Callback() {
 
                     @Override
                     public void success(String path) {
