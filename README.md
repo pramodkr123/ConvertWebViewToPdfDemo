@@ -1,7 +1,8 @@
 # ConvertWebViewToPdfDemo
 Library to create pdf file from webview
 
-use this dependenices into your app level build.gradle file
+Use this dependenices into your app level build.gradle file
+
 
 compile 'com.github.pramodkr123:ConvertWebViewToPdfDemo:1.0.0'
 
