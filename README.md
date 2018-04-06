@@ -13,6 +13,9 @@ Add this to your app build.gradle:
 
      compile 'com.github.pramodkr123:ConvertWebViewToPdfDemo:1.0.0'
 
+Permission in Manifest
+
+     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
 Sample code :
 
