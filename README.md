@@ -1,16 +1,17 @@
 # ConvertWebViewToPdfDemo
 Library to create pdf file from webview
 
-Use this dependenices into your app level build.gradle file
+Add the following to your project level build.gradle:
 
+        allprojects {	
+	        repositories {
+		        maven { url "https://jitpack.io" }
+	        }
+        }
 
-allprojects {
-	repositories {
-		maven { url "https://jitpack.io" }
-	}
-}
+Add this to your app build.gradle:
 
-compile 'com.github.pramodkr123:ConvertWebViewToPdfDemo:1.0.0'
+     compile 'com.github.pramodkr123:ConvertWebViewToPdfDemo:1.0.0'
 
 
 Sample code :
