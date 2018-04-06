@@ -1,5 +1,6 @@
 package com.convertwebviewtopdf.demo;
 
+import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Environment;
 import android.print.PdfPrint;
@@ -9,6 +10,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
+
+import com.webviewtopdf.PdfView;
 
 import java.io.File;
 
@@ -32,16 +35,39 @@ public class MainActivity extends AppCompatActivity {
         button_convert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createWebPrintJob(webView);
+
+
+                File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM + "/PDFTest/");
+                final String fileName="Test.pdf";
+
+                final ProgressDialog progressDialog=new ProgressDialog(MainActivity.this);
+                progressDialog.setMessage("Please wait");
+                progressDialog.show();
+                PdfView.createWebPrintJob(MainActivity.this, webView, path, fileName, new PdfView.Callback() {
+
+                    @Override
+                    public void success(String path) {
+                        progressDialog.dismiss();
+                        PdfView.openPdfFile(MainActivity.this,getString(R.string.app_name),"Do you want to open the pdf file?"+fileName,path);
+                    }
+
+                    @Override
+                    public void failure() {
+                        progressDialog.dismiss();
+
+                    }
+                });
+
             }
         });
 
         System.out.println("New Chages");
+
     }
 
 
 
-    private void createWebPrintJob(WebView webView) {
+   /* private void createWebPrintJob(WebView webView) {
         String jobName = getString(R.string.app_name) + " Document";
         PrintAttributes attributes = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -50,10 +76,10 @@ public class MainActivity extends AppCompatActivity {
                     .setResolution(new PrintAttributes.Resolution("pdf", "pdf", 600, 600))
                     .setMinMargins(PrintAttributes.Margins.NO_MARGINS).build();
         }
-        File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM + "/PDFTest/");
+
         PdfPrint pdfPrint = new PdfPrint(attributes);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             pdfPrint.print(webView.createPrintDocumentAdapter(jobName), path, "output_" + System.currentTimeMillis() + ".pdf");
         }
-    }
+    }*/
 }

@@ -8,7 +8,6 @@ import android.util.Log;
 import java.io.File;
 
 public class PdfPrint {
-
     private static final String TAG = PdfPrint.class.getSimpleName();
     private final PrintAttributes printAttributes;
 
@@ -16,7 +15,7 @@ public class PdfPrint {
         this.printAttributes = printAttributes;
     }
 
-    public void print(final PrintDocumentAdapter printAdapter, final File path, final String fileName) {
+    public void print(final PrintDocumentAdapter printAdapter, final File path, final String fileName, final CallbackPrint callback) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             printAdapter.onLayout(null, printAttributes, null, new PrintDocumentAdapter.LayoutResultCallback() {
                 @Override
@@ -26,6 +25,14 @@ public class PdfPrint {
                             @Override
                             public void onWriteFinished(PageRange[] pages) {
                                 super.onWriteFinished(pages);
+                                if (pages.length>0){
+                                    File file = new File(path, fileName);
+                                    String path=file.getAbsolutePath();
+                                    callback.success(path);
+                                }else {
+                                    callback.onFailure();
+                                }
+
                             }
                         });
                     }
@@ -47,5 +54,12 @@ public class PdfPrint {
             Log.e(TAG, "Failed to open ParcelFileDescriptor", e);
         }
         return null;
+    }
+
+
+
+    public interface CallbackPrint{
+        void success(String path);
+        void onFailure();
     }
 }
