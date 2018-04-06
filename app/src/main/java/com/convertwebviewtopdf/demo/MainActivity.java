@@ -61,25 +61,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        System.out.println("New Chages");
-
     }
 
-
-
-   /* private void createWebPrintJob(WebView webView) {
-        String jobName = getString(R.string.app_name) + " Document";
-        PrintAttributes attributes = null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            attributes = new PrintAttributes.Builder()
-                    .setMediaSize(PrintAttributes.MediaSize.ISO_A4)
-                    .setResolution(new PrintAttributes.Resolution("pdf", "pdf", 600, 600))
-                    .setMinMargins(PrintAttributes.Margins.NO_MARGINS).build();
-        }
-
-        PdfPrint pdfPrint = new PdfPrint(attributes);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            pdfPrint.print(webView.createPrintDocumentAdapter(jobName), path, "output_" + System.currentTimeMillis() + ".pdf");
-        }
-    }*/
 }
