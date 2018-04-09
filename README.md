@@ -25,14 +25,14 @@ Add a FileProvider tag in AndroidManifest.xml under tag.
     ...
     <application
         ...
-        <provider
-            android:name=".GenericFileProvider"
-            android:authorities="${applicationId}.my.package.name.provider"
+         <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.package.name.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+                android:resource="@xml/provider_paths" />
         </provider>
     </application>
     </manifest>
