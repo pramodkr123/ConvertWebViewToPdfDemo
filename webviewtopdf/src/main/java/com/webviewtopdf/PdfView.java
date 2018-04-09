@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.print.PdfPrint;
 import android.print.PrintAttributes;
+import android.support.v4.content.FileProvider;
 import android.webkit.WebView;
 
 import java.io.File;
@@ -19,7 +20,7 @@ import java.io.File;
 
 public class PdfView {
 
-    public static final int REQUEST_CODE=101;
+    private static final int REQUEST_CODE=101;
 
     /**
      * convert webview content into to pdf file
@@ -34,6 +35,7 @@ public class PdfView {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (activity.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 activity.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE);
+                callback.failure();
                return;
             }
         }
@@ -103,7 +105,6 @@ public class PdfView {
 
     }
 
-
     /** callback interface to get the result back after created pdf file*/
     public interface Callback{
         void success(String path);
@@ -115,19 +116,19 @@ public class PdfView {
      * @param activity pass the current activity context
      * @param path storage full path
      */
-    private static void fileChooser(Activity activity,String path){
+    private  static void fileChooser(Activity activity, String path) {
         File file = new File(path);
-        Intent target = new Intent(Intent.ACTION_VIEW);
-        target.setDataAndType(Uri.fromFile(file),"application/pdf");
-        target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-
+        Intent target = new Intent("android.intent.action.VIEW");
+        Uri uri = FileProvider.getUriForFile(activity, "com.package.name.fileprovider", file);
+        target.setDataAndType(uri, "application/pdf");
+        target.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         Intent intent = Intent.createChooser(target, "Open File");
         try {
             activity.startActivity(intent);
-        } catch (ActivityNotFoundException e) {
-            // Instruct the user to install a PDF reader here, or something
-            e.printStackTrace();
+        } catch (ActivityNotFoundException var6) {
+            var6.printStackTrace();
         }
+
     }
 
 }
