@@ -11,18 +11,21 @@ Add the following to your project level build.gradle:
 
 Add this to your app build.gradle:
 
-     compile 'com.github.pramodkr123:ConvertWebViewToPdfDemo:1.0.0'
+     compile 'com.github.pramodkr123:ConvertWebViewToPdfDemo:1.0.2'
 
+Permission in Manifest
+
+     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
 Sample code :
 
-                File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM + "/PDFTest/");
+                File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM + "/PDFTest/");
                 final String fileName="Test.pdf";
 
                 final ProgressDialog progressDialog=new ProgressDialog(MainActivity.this);
                 progressDialog.setMessage("Please wait");
                 progressDialog.show();
-                PdfView.createWebPrintJob(MainActivity.this, webView, path, fileName, new PdfView.Callback() {
+                PdfView.createWebPrintJob(MainActivity.this, webView, directory, fileName, new PdfView.Callback() {
 
                     @Override
                     public void success(String path) {
