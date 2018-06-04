@@ -61,6 +61,20 @@ public class PdfView {
                     callback.failure();
                 }
             });
+        }else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                pdfPrint.print(webView.createPrintDocumentAdapter(), directory, fileName, new PdfPrint.CallbackPrint() {
+                    @Override
+                    public void success(String path) {
+                        callback.success(path);
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        callback.failure();
+                    }
+                });
+            }
         }
     }
 
