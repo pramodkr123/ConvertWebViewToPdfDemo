@@ -24,6 +24,7 @@ Add a FileProvider tag in AndroidManifest.xml under tag.
     <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     ...
     <application
+    android:requestLegacyExternalStorage="true">
         ...
          <provider
             android:name="android.support.v4.content.FileProvider"
