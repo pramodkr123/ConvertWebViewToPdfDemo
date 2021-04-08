@@ -47,7 +47,7 @@ Then create a provider_paths.xml file in res/xml folder.
      <external-path name="external_files" path="."/>
     </paths>
 
-Before Create pdf check this pernmission for Android 11 devices.
+Before Create pdf check this permission for Android 11 devices.
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
         if (Environment.isExternalStorageManager()) {
