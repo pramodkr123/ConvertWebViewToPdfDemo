@@ -53,7 +53,7 @@ Before Create pdf check this pernmission for Android 11 devices.
         if (Environment.isExternalStorageManager()) {
             //write create pdf code here
          } else {
-	    // request permission
+	      //request permission
 	     try {
                 val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
                 intent.addCategory("android.intent.category.DEFAULT")
