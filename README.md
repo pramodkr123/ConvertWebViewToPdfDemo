@@ -16,6 +16,7 @@ Add this to your app build.gradle:
 Permission in Manifest
 
      <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" /> //Add this permission for Android 11
      
 If your targetSdkVersion >= 24, then we have to use FileProvider class to give access to the particular file or folder to make them accessible for other apps. 
 Add a FileProvider tag in AndroidManifest.xml under tag.
@@ -41,7 +42,7 @@ Add a FileProvider tag in AndroidManifest.xml under tag.
 
 Then create a provider_paths.xml file in res/xml folder.
 
-        <?xml version="1.0" encoding="utf-8"?>
+    <?xml version="1.0" encoding="utf-8"?>
     <paths xmlns:android="http://schemas.android.com/apk/res/android">
      <external-path name="external_files" path="."/>
     </paths>
