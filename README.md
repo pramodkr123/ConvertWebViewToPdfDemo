@@ -54,7 +54,7 @@ Before Create pdf check this pernmission for Android 11 devices.
             //write create pdf code here
          } else {
 	    // request permission
-	    try {
+	     try {
                 val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
                 intent.addCategory("android.intent.category.DEFAULT")
                 intent.data = Uri.parse(String.format("package:%s", applicationContext.packageName))
@@ -64,13 +64,13 @@ Before Create pdf check this pernmission for Android 11 devices.
                 intent.action = Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
                 startActivityForResult(intent, 1)
             }
-	 }
+	   }
      }
      
      
      override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-	// check permission is Granting
+	    // check permission is Granting
         if (requestCode == 1 && Environment.isExternalStorageManager()){
             //write create pdf code here
         }
