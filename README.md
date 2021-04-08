@@ -47,6 +47,38 @@ Then create a provider_paths.xml file in res/xml folder.
      <external-path name="external_files" path="."/>
     </paths>
 
+Before Create pdf check this pernmission for Android 11 devices.
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        if (Environment.isExternalStorageManager()) {
+            //write create pdf code here
+         } else {
+	    // request permission
+	    try {
+                val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+                intent.addCategory("android.intent.category.DEFAULT")
+                intent.data = Uri.parse(String.format("package:%s", applicationContext.packageName))
+                startActivityForResult(intent, 1)
+            } catch (e: Exception) {
+                val intent = Intent()
+                intent.action = Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
+                startActivityForResult(intent, 1)
+            }
+	 }
+     }
+     
+     
+     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+	// check permission is Granting
+        if (requestCode == 1 && Environment.isExternalStorageManager()){
+            //write create pdf code here
+        }
+    }
+     
+
+
+
 Sample code :
 
                 File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM + "/PDFTest/");
