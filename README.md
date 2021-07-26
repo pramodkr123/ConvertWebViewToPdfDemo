@@ -16,7 +16,7 @@ Add this to your app build.gradle:
 Permission in Manifest
 
      <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" /> //Add this permission for Android 11
+
      
 If your targetSdkVersion >= 24, then we have to use FileProvider class to give access to the particular file or folder to make them accessible for other apps. 
 Add a FileProvider tag in AndroidManifest.xml under tag.
@@ -48,26 +48,7 @@ Then create a provider_paths.xml file in res/xml folder.
     </paths>
 
 Before Create pdf check this permission for Android 11 devices.
-
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-        if (Environment.isExternalStorageManager()) {
-            //write create pdf code here
-         } else {
-	      //request permission
-	     try {
-                val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
-                intent.addCategory("android.intent.category.DEFAULT")
-                intent.data = Uri.parse(String.format("package:%s", applicationContext.packageName))
-                startActivityForResult(intent, 1)
-            } catch (e: Exception) {
-                val intent = Intent()
-                intent.action = Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
-                startActivityForResult(intent, 1)
-            }
-	   }
-     }
-     
-     
+   
      override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 	    // check permission is Granting
