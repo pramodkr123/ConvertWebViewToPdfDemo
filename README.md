@@ -1,4 +1,4 @@
-# ConvertWebViewToPdfDemo
+# ConvertWebViewToPdf
 Library to create pdf file from webview
 
 Add the following to your project level build.gradle:
