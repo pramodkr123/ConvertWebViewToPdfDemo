@@ -15,7 +15,9 @@
         tools:ignore="AllowBackup"
         android:fullBackupContent="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -24,8 +26,8 @@
         </activity>
 
         <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.package.name.fileprovider"
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.convertwebviewtopdf.demo.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

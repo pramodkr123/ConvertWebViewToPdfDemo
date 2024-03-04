@@ -1,6 +1,5 @@
 package android.print;
 
-import android.os.Build;
 import android.os.CancellationSignal;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
@@ -15,38 +14,34 @@ public class PdfPrint {
         this.printAttributes = printAttributes;
     }
 
-    public void print(final PrintDocumentAdapter printAdapter, final File path, final String fileName, final CallbackPrint callback) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            printAdapter.onLayout(null, printAttributes, null, new PrintDocumentAdapter.LayoutResultCallback() {
-                @Override
-                public void onLayoutFinished(PrintDocumentInfo info, boolean changed) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                        printAdapter.onWrite(new PageRange[]{PageRange.ALL_PAGES}, getOutputFile(path, fileName), new CancellationSignal(), new PrintDocumentAdapter.WriteResultCallback() {
-                            @Override
-                            public void onWriteFinished(PageRange[] pages) {
-                                super.onWriteFinished(pages);
-                                if (pages.length>0){
-                                    File file = new File(path, fileName);
-                                    String path=file.getAbsolutePath();
-                                    callback.success(path);
-                                }else {
-                                    callback.onFailure();
-                                }
-
-                            }
-                        });
-                    }
-                }
-            }, null);
+    public void print(final PrintDocumentAdapter printAdapter, String path, final CallbackPrint callback) {
+        ParcelFileDescriptor parcelFileDescriptor = getOutputFile(path);
+        if (parcelFileDescriptor == null) {
+            callback.onFailure();
+            return;
         }
+
+        printAdapter.onLayout(null, printAttributes, null, new PrintDocumentAdapter.LayoutResultCallback() {
+            @Override
+            public void onLayoutFinished(PrintDocumentInfo info, boolean changed) {
+                printAdapter.onWrite(new PageRange[]{PageRange.ALL_PAGES}, parcelFileDescriptor, new CancellationSignal(), new PrintDocumentAdapter.WriteResultCallback() {
+                    @Override
+                    public void onWriteFinished(PageRange[] pages) {
+                        super.onWriteFinished(pages);
+                        if (pages.length > 0) {
+                            callback.success(path);
+                        }else {
+                            callback.onFailure();
+                        }
+
+                    }
+                });
+            }
+        }, null);
     }
 
-
-    private ParcelFileDescriptor getOutputFile(File path, String fileName) {
-        if (!path.exists()) {
-            path.mkdirs();
-        }
-        File file = new File(path, fileName);
+    private ParcelFileDescriptor getOutputFile(String path) {
+        File file = new File(path);
         try {
             file.createNewFile();
             return ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_WRITE);
@@ -55,8 +50,6 @@ public class PdfPrint {
         }
         return null;
     }
-
-
 
     public interface CallbackPrint{
         void success(String path);
