@@ -11,7 +11,7 @@ Add the following to your project level build.gradle:
 
 Add this to your app build.gradle:
 
-     compile 'com.github.pramodkr123:ConvertWebViewToPdfDemo:1.0.4'
+     compile 'com.github.pramodkr123:ConvertWebViewToPdfDemo:1.0.5'
 
 Permission in Manifest
 
