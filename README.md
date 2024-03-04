@@ -28,8 +28,8 @@ Add a FileProvider tag in AndroidManifest.xml under tag.
     android:requestLegacyExternalStorage="true">
         ...
          <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.package.name.fileprovider"
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.convertwebviewtopdf.demo.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -42,9 +42,13 @@ Add a FileProvider tag in AndroidManifest.xml under tag.
 
 Then create a provider_paths.xml file in res/xml folder.
 
-    <?xml version="1.0" encoding="utf-8"?>
     <paths xmlns:android="http://schemas.android.com/apk/res/android">
-     <external-path name="external_files" path="."/>
+    <external-path
+        name="external_files"
+        path="." />
+    <root-path
+        name="root"
+        path="." />
     </paths>
 
 Before Create pdf check this permission for Android 11 devices.
@@ -62,26 +66,26 @@ Before Create pdf check this permission for Android 11 devices.
 
 Sample code :
 
-                File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM + "/PDFTest/");
-                final String fileName="Test.pdf";
+            final String fileName="Test.pdf";
+            File file = new File(getExternalFilesDir("DemoApp"), fileName);
+            if (file.exists()) file.delete();
 
-                final ProgressDialog progressDialog=new ProgressDialog(MainActivity.this);
-                progressDialog.setMessage("Please wait");
-                progressDialog.show();
-                PdfView.createWebPrintJob(MainActivity.this, webView, directory, fileName, new PdfView.Callback() {
+            final ProgressDialog progressDialog=new ProgressDialog(MainActivity.this);
+            progressDialog.setMessage("Please wait");
+            progressDialog.show();
+            PdfView.createWebPrintJob(MainActivity.this, webView, file.getAbsolutePath(), new PdfView.Callback() {
 
-                    @Override
-                    public void success(String path) {
-                        progressDialog.dismiss();
-                        PdfView.openPdfFile(MainActivity.this,getString(R.string.app_name),"Do you want to open the pdf file?"+fileName,path);
-                    }
+                @Override
+                public void success(String path) {
+                    progressDialog.dismiss();
+                    PdfView.openPdfFile(MainActivity.this, getString(R.string.app_name), "Do you want to open the pdf file?" + fileName, path, "com.convertwebviewtopdf.demo.fileprovider");
+                }
 
-                    @Override
-                    public void failure() {
-                        progressDialog.dismiss();
-
-                    }
-                });
+                @Override
+                public void failure(int errorCode) {
+                    progressDialog.dismiss();
+                }
+            });
 
 
 
